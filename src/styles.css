@@ -47,6 +47,10 @@
   font-weight: 400;
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
@@ -97,6 +101,17 @@
 
 * {
   box-sizing: border-box;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+label,
+summary,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -3174,6 +3189,26 @@ div.form-actions.page-submit-actions {
 }
 
 @media (max-width: 900px) {
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  .prompt-settings-title,
+  .prompt-source-title {
+    display: none;
+  }
+
+  .workspace-grid .field-header {
+    display: none;
+  }
+
   .page-shell {
     padding: 12px 8px 20px;
     overflow-x: hidden;

@@ -1825,7 +1825,7 @@ export function ResultPage() {
             <section className="panel">
               <div className="panel-head">
                 <div>
-                  <h2>提示词设置</h2>
+                  <h2 className="prompt-settings-title">提示词设置</h2>
                   <p>选择基于八字或紫微，再用快捷按钮生成问题。</p>
                 </div>
               </div>
@@ -1834,7 +1834,7 @@ export function ResultPage() {
                 <div className="prompt-compact-grid">
                   <label className="field-card">
                     <div className="field-header">
-                      <span>提示词来源</span>
+                      <span className="prompt-source-title">提示词来源</span>
                     </div>
                     <select
                       value={promptState.promptSource}
