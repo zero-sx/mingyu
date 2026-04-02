@@ -12,7 +12,7 @@ export type QueryInputState = {
   year: string;
   month: string;
   day: string;
-  timeIndex: number;
+  timeIndex: number | '';
   isLeapMonth: boolean;
   useTrueSolarTime: boolean;
   birthHour: string;
@@ -25,7 +25,7 @@ export type QueryInputState = {
   partnerYear: string;
   partnerMonth: string;
   partnerDay: string;
-  partnerTimeIndex: number;
+  partnerTimeIndex: number | '';
   partnerIsLeapMonth: boolean;
   partnerUseTrueSolarTime: boolean;
   partnerBirthHour: string;
@@ -54,27 +54,27 @@ export const defaultInputState: QueryInputState = {
   name: '',
   gender: 'male',
   dateType: 'solar',
-  year: '2000',
-  month: '8',
-  day: '16',
-  timeIndex: 1,
+  year: '',
+  month: '',
+  day: '',
+  timeIndex: '',
   isLeapMonth: false,
   useTrueSolarTime: false,
-  birthHour: '01',
-  birthMinute: '00',
+  birthHour: '',
+  birthMinute: '',
   birthPlace: '',
   birthLongitude: '',
   partnerName: '',
   partnerGender: 'female',
   partnerDateType: 'solar',
-  partnerYear: '2000',
-  partnerMonth: '8',
-  partnerDay: '16',
-  partnerTimeIndex: 1,
+  partnerYear: '',
+  partnerMonth: '',
+  partnerDay: '',
+  partnerTimeIndex: '',
   partnerIsLeapMonth: false,
   partnerUseTrueSolarTime: false,
-  partnerBirthHour: '01',
-  partnerBirthMinute: '00',
+  partnerBirthHour: '',
+  partnerBirthMinute: '',
   partnerBirthPlace: '',
   partnerBirthLongitude: '',
 };
@@ -98,6 +98,15 @@ function getString(params: URLSearchParams, key: string, fallback: string) {
   return params.get(key) ?? fallback;
 }
 
+function parseTimeIndex(value: string) {
+  if (value === '') {
+    return '';
+  }
+
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : '';
+}
+
 export function buildBirthDate(year: string, month: string, day: string) {
   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 }
@@ -114,7 +123,7 @@ export function parseInputState(params: URLSearchParams): QueryInputState {
     year: getString(params, 'year', defaultInputState.year),
     month: getString(params, 'month', defaultInputState.month),
     day: getString(params, 'day', defaultInputState.day),
-    timeIndex: Number(getString(params, 'timeIndex', String(defaultInputState.timeIndex))),
+    timeIndex: parseTimeIndex(getString(params, 'timeIndex', String(defaultInputState.timeIndex))),
     isLeapMonth: getString(params, 'isLeapMonth', '0') === '1',
     useTrueSolarTime: getString(params, 'useTrueSolarTime', '0') === '1',
     birthHour: getString(params, 'birthHour', defaultInputState.birthHour),
@@ -133,7 +142,7 @@ export function parseInputState(params: URLSearchParams): QueryInputState {
     partnerYear: getString(params, 'partnerYear', defaultInputState.partnerYear),
     partnerMonth: getString(params, 'partnerMonth', defaultInputState.partnerMonth),
     partnerDay: getString(params, 'partnerDay', defaultInputState.partnerDay),
-    partnerTimeIndex: Number(
+    partnerTimeIndex: parseTimeIndex(
       getString(params, 'partnerTimeIndex', String(defaultInputState.partnerTimeIndex)),
     ),
     partnerIsLeapMonth: getString(params, 'partnerIsLeapMonth', '0') === '1',

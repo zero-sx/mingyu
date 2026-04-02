@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { SegmentedControl } from '@/components/SegmentedControl';
 import { BIRTH_TIME_OPTIONS } from '@/lib/birth-time';
+import { getPersonReferenceLabel, getPersonSectionTitle, type PersonRole } from '@/lib/input-labels';
 import {
   upsertCompatibilityHistory,
   upsertPersonalHistory,
@@ -13,8 +14,6 @@ import {
   type QueryInputState,
 } from '@/lib/query-state';
 import { getTimeIndexFromClock } from '@/utils/dateUtils';
-
-type PersonRole = 'self' | 'partner';
 
 const SELF_FIELD_MAP = {
   name: 'name',
@@ -54,10 +53,6 @@ function getFieldKey(role: PersonRole, key: keyof typeof SELF_FIELD_MAP) {
 
 function getPersonValue(form: QueryInputState, role: PersonRole, key: keyof typeof SELF_FIELD_MAP) {
   return form[getFieldKey(role, key)];
-}
-
-function getSectionTitle(role: PersonRole) {
-  return role === 'self' ? '第一人信息' : '第二人信息';
 }
 
 type BirthPlaceCascadeModule = typeof import('@/utils/core/birthPlaceCascade');
@@ -301,20 +296,44 @@ export function InputPage() {
 
   function handleSubmit() {
     setError('');
+    const selfLabel = getPersonReferenceLabel(form.analysisMode, 'self');
 
     if (!form.year || !form.month || !form.day) {
-      setError('请填写完整的第一人信息');
+      setError(`请填写完整的${selfLabel}信息`);
+      return;
+    }
+
+    if (!form.useTrueSolarTime && form.timeIndex === '') {
+      setError(`请选择${selfLabel}的出生时辰`);
+      return;
+    }
+
+    if (form.useTrueSolarTime && (form.birthHour === '' || form.birthMinute === '')) {
+      setError(`请填写${selfLabel}的精准出生时间`);
       return;
     }
 
     if (form.useTrueSolarTime && (!form.birthPlace.trim() || !form.birthLongitude.trim())) {
-      setError('请先为第一人选择出生地');
+      setError(`请先为${selfLabel}选择出生地`);
       return;
     }
 
     if (form.analysisMode === 'compatibility') {
       if (!form.partnerYear || !form.partnerMonth || !form.partnerDay) {
         setError('请填写完整的第二人信息');
+        return;
+      }
+
+      if (!form.partnerUseTrueSolarTime && form.partnerTimeIndex === '') {
+        setError('请选择第二人的出生时辰');
+        return;
+      }
+
+      if (
+        form.partnerUseTrueSolarTime &&
+        (form.partnerBirthHour === '' || form.partnerBirthMinute === '')
+      ) {
+        setError('请填写第二人的精准出生时间');
         return;
       }
 
@@ -424,7 +443,7 @@ export function InputPage() {
     return (
       <section className={`person-section ${role === 'partner' ? 'second-person' : ''}`}>
         <div className="person-section-head">
-          <h2>{getSectionTitle(role)}</h2>
+          <h2>{getPersonSectionTitle(form.analysisMode, role)}</h2>
           <p>{historyHint}</p>
         </div>
 
@@ -444,7 +463,7 @@ export function InputPage() {
           </div>
 
           <div className={`form-row-flex ${isLunar ? 'has-third-item' : ''}`}>
-            <div className="form-item">
+            <div className="form-item compact-segmented-field">
               <label>性别</label>
               <SegmentedControl
                 value={getPersonValue(form, role, 'gender') as 'male' | 'female'}
@@ -456,7 +475,7 @@ export function InputPage() {
               />
             </div>
 
-            <div className="form-item">
+            <div className="form-item compact-segmented-field">
               <label>日历</label>
               <SegmentedControl
                 value={isLunar}
@@ -577,10 +596,17 @@ export function InputPage() {
                 <label htmlFor={`${role}-time-index-input`}>时辰</label>
                 <select
                   id={`${role}-time-index-input`}
-                  value={Number(getPersonValue(form, role, 'timeIndex'))}
+                  value={getPersonValue(form, role, 'timeIndex') === '' ? '' : Number(getPersonValue(form, role, 'timeIndex'))}
                   className="form-input"
-                  onChange={(event) => updatePersonField(role, 'timeIndex', Number(event.target.value))}
+                  onChange={(event) =>
+                    updatePersonField(
+                      role,
+                      'timeIndex',
+                      event.target.value === '' ? '' : Number(event.target.value),
+                    )
+                  }
                 >
+                  <option value="">请选择时辰</option>
                   {BIRTH_TIME_OPTIONS.map((time, index) => (
                     <option key={time.label} value={index}>
                       {time.label}（{time.range}）
@@ -622,13 +648,22 @@ export function InputPage() {
 
             {error ? <div className="form-error-text global-form-error">{error}</div> : null}
 
-            <div className="form-actions page-submit-actions">
-              <button className="primary-button start-submit-button" type="button" onClick={handleSubmit}>
+            <div
+              className="form-actions page-submit-actions"
+              style={{ width: '100%', gridTemplateColumns: 'minmax(0, 1fr)', justifyItems: 'stretch' }}
+            >
+              <button
+                className="primary-button start-submit-button"
+                type="button"
+                onClick={handleSubmit}
+                style={{ width: '100%' }}
+              >
                 开始排盘
               </button>
               <button
                 className="secondary-page-button"
                 type="button"
+                style={{ width: '100%' }}
                 onClick={() =>
                   navigate(`/records?tab=${form.analysisMode === 'compatibility' ? 'compatibility' : 'personal'}`)
                 }

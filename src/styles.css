@@ -1568,12 +1568,14 @@ select {
 }
 
 .page-topbar {
+  position: relative;
   max-width: 760px;
   margin: 0 auto 10px;
-  display: grid;
-  grid-template-columns: 64px 1fr 64px;
+  display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 38px;
+  padding: 0 72px;
 }
 
 .page-topbar-wide {
@@ -1582,6 +1584,10 @@ select {
 }
 
 .page-topbar-back {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   border: none;
   background: transparent;
   color: #0f766e;
@@ -1592,6 +1598,7 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
+  z-index: 2;
   cursor: pointer;
 }
 
@@ -1602,11 +1609,7 @@ select {
   font-weight: 700;
   color: #0b3b36;
   line-height: 1.2;
-}
-
-.page-topbar-spacer {
-  width: 64px;
-  height: 1px;
+  pointer-events: none;
 }
 
 .tab-strip {
@@ -2669,6 +2672,16 @@ select {
   color: #164e47;
 }
 
+.compact-segmented-field .segmented-control-react {
+  width: fit-content;
+  max-width: 100%;
+  min-width: 168px;
+}
+
+.compact-segmented-field .segmented-control-item-react {
+  min-width: 74px;
+}
+
 .address-trigger {
   display: flex;
   align-items: center;
@@ -2698,11 +2711,25 @@ select {
   justify-content: flex-start;
 }
 
-.page-submit-actions {
+div.form-actions.page-submit-actions {
+  display: grid;
+  grid-auto-flow: row;
   gap: 10px;
+  width: 100%;
   margin-top: 2px;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  justify-items: stretch;
+}
+
+.page-submit-actions .start-submit-button,
+.page-submit-actions .secondary-page-button {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-size: 15px;
 }
 
 .secondary-page-button {
@@ -3604,8 +3631,8 @@ select {
 
   .page-topbar {
     margin-bottom: 8px;
-    grid-template-columns: 56px 1fr 56px;
     min-height: 34px;
+    padding: 0 64px;
   }
 
   .page-topbar-wide {
@@ -3619,10 +3646,6 @@ select {
 
   .page-topbar-title {
     font-size: 17px;
-  }
-
-  .page-topbar-spacer {
-    width: 56px;
   }
 
   .top-nav-group {
@@ -3715,6 +3738,8 @@ select {
   }
 
   .page-submit-actions {
+    justify-content: center;
+    justify-items: stretch;
     gap: 8px;
   }
 
@@ -4074,6 +4099,15 @@ select {
 }
 
 @media (max-width: 520px) {
+  .page-submit-actions {
+    justify-items: stretch;
+  }
+
+  .page-submit-actions .start-submit-button,
+  .page-submit-actions .secondary-page-button {
+    width: 100%;
+  }
+
   .page-shell {
     padding: 10px 6px 16px;
   }

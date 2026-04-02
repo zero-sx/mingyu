@@ -28,7 +28,7 @@ export function buildPersonFromInput(input: {
   year: string;
   month: string;
   day: string;
-  timeIndex: number;
+  timeIndex: number | '';
   dateType: 'solar' | 'lunar';
   isLeapMonth: boolean;
   useTrueSolarTime: boolean;
@@ -37,13 +37,17 @@ export function buildPersonFromInput(input: {
   birthPlace: string;
   birthLongitude: string;
 }): Person {
+  if (!input.useTrueSolarTime && input.timeIndex === '') {
+    throw new Error('请选择出生时辰。');
+  }
+
   return {
     name: '',
     gender: input.gender,
     year: Number(input.year),
     month: Number(input.month),
     day: Number(input.day),
-    timeIndex: input.timeIndex,
+    timeIndex: Number(input.timeIndex),
     isLunar: input.dateType === 'lunar',
     isLeapMonth: input.isLeapMonth,
     useTrueSolarTime: input.useTrueSolarTime,
@@ -102,9 +106,13 @@ export function buildZiweiChartInput(input: {
   year: string;
   month: string;
   day: string;
-  timeIndex: number;
+  timeIndex: number | '';
   isLeapMonth: boolean;
 }): ChartInput {
+  if (input.timeIndex === '') {
+    throw new Error('请选择出生时辰。');
+  }
+
   const gender = input.gender === 'male' ? '男' : '女';
   const birthDate = `${input.year}-${input.month.padStart(2, '0')}-${input.day.padStart(2, '0')}`;
 

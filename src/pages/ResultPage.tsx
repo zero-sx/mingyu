@@ -34,6 +34,7 @@ import {
   buildZiweiCustomPromptPatch,
   shouldShowPromptShareButton,
 } from '@/lib/prompt-page-rules';
+import { PageTopbar } from '@/components/PageTopbar';
 import { uniqueNonEmptyStrings } from '@/lib/array-utils';
 import type { AnalysisPayloadV1, PalaceFact } from '@/types/analysis';
 import type { BaziChartResult } from '@/utils/bazi/baziTypes';
@@ -1728,29 +1729,23 @@ export function ResultPage() {
 
   return (
     <div className="page-shell">
-      <div className="page-topbar page-topbar-wide">
-        <button
-          type="button"
-          className="page-topbar-back"
-          onClick={() =>
-            navigate(`/?mode=${inputState.analysisMode === 'compatibility' ? 'compatibility' : 'single'}`)
-          }
-        >
-          返回
-        </button>
-        <h1 className="page-topbar-title">排盘结果</h1>
-        <div className="page-topbar-spacer" aria-hidden="true" />
-      </div>
+      <PageTopbar
+        title="排盘结果"
+        wide
+        onBack={() =>
+          navigate(`/?mode=${inputState.analysisMode === 'compatibility' ? 'compatibility' : 'single'}`)
+        }
+      />
 
       <div className="tab-strip">
         <button type="button" className={`tab-chip ${promptState.tab === 'bazi' ? 'is-active' : ''}`} onClick={() => switchTab('bazi')}>
-          八字页
+          八字
         </button>
         <button type="button" className={`tab-chip ${promptState.tab === 'ziwei' ? 'is-active' : ''}`} onClick={() => switchTab('ziwei')}>
-          紫微页
+          紫薇
         </button>
         <button type="button" className={`tab-chip ${promptState.tab === 'prompt' ? 'is-active' : ''}`} onClick={() => switchTab('prompt')}>
-          提示词页
+          AI
         </button>
       </div>
 

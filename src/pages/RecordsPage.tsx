@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { PageTopbar } from '@/components/PageTopbar';
 import { SegmentedControl } from '@/components/SegmentedControl';
 import {
   loadCompatibilityHistory,
@@ -91,19 +92,12 @@ export function RecordsPage() {
     <div className="page-shell input-page-shell">
       <div className="bazi-view-container">
         <section className="history-page-section">
-          <div className="page-topbar">
-            <button
-              type="button"
-              className="page-topbar-back"
-              onClick={() =>
-                navigate(`/?mode=${activeTab === 'compatibility' ? 'compatibility' : 'single'}`)
-              }
-            >
-              返回
-            </button>
-            <h1 className="page-topbar-title">历史记录</h1>
-            <div className="page-topbar-spacer" aria-hidden="true" />
-          </div>
+          <PageTopbar
+            title="历史记录"
+            onBack={() =>
+              navigate(`/?mode=${activeTab === 'compatibility' ? 'compatibility' : 'single'}`)
+            }
+          />
 
           <div className="person-section-head history-section-head">
             <p>支持搜索，点击记录可直接进入结果页。</p>
