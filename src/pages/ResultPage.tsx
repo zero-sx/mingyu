@@ -2305,6 +2305,11 @@ export function ResultPage() {
     }
   }
 
+  useEffect(() => {
+    setCopyState('复制');
+    setShareState('分享');
+  }, [latestActivePromptText]);
+
   return (
     <div className="page-shell">
       <PageTopbar

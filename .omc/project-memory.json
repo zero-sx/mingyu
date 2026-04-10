@@ -1,0 +1,193 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1775805611362,
+  "projectRoot": "/Users/zero/Documents/project/mingyu",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "19.1.1",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.1.1",
+        "category": "frontend"
+      },
+      {
+        "name": "vite",
+        "version": "7.1.7",
+        "category": "build"
+      }
+    ],
+    "packageManager": "pnpm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "pnpm build",
+    "testCommand": "pnpm test",
+    "lintCommand": null,
+    "devCommand": "pnpm dev",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "test": "tsx --test tests/*.test.ts"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": "*.test.ts",
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "public",
+      "src",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "build": {
+      "path": "build",
+      "purpose": "Build output",
+      "fileCount": 1,
+      "lastAccessed": 1775805611348,
+      "keyFiles": [
+        "chunking.ts"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 6,
+      "lastAccessed": 1775805611348,
+      "keyFiles": [
+        "apple-touch-icon.png",
+        "favicon.png",
+        "manifest.webmanifest",
+        "pwa-192x192.png",
+        "pwa-512x512.png"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 6,
+      "lastAccessed": 1775805611351,
+      "keyFiles": [
+        "App.tsx",
+        "ambient-modules.d.ts",
+        "main.tsx",
+        "registerServiceWorker.ts",
+        "styles.css"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 24,
+      "lastAccessed": 1775805611351,
+      "keyFiles": [
+        "array-utils.test.ts",
+        "chunking.test.ts",
+        "divination-engine.test.ts",
+        "divination-history.test.ts",
+        "divination-input-page.test.ts"
+      ]
+    },
+    "src/components": {
+      "path": "src/components",
+      "purpose": "UI components",
+      "fileCount": 5,
+      "lastAccessed": 1775805611351,
+      "keyFiles": [
+        "BaziFortuneTools.tsx",
+        "DivinationPanel.tsx",
+        "PageTopbar.tsx"
+      ]
+    },
+    "src/config": {
+      "path": "src/config",
+      "purpose": "Configuration files",
+      "fileCount": 2,
+      "lastAccessed": 1775805611352,
+      "keyFiles": [
+        "divination-data.ts",
+        "meihua-omens.ts"
+      ]
+    },
+    "src/data": {
+      "path": "src/data",
+      "purpose": "Data files",
+      "fileCount": 1,
+      "lastAccessed": 1775805611352,
+      "keyFiles": [
+        "chinaBirthPlaceTree.json"
+      ]
+    },
+    "src/lib": {
+      "path": "src/lib",
+      "purpose": "Library code",
+      "fileCount": 14,
+      "lastAccessed": 1775805611352,
+      "keyFiles": [
+        "array-utils.ts",
+        "birth-time.ts",
+        "chart-engines.ts"
+      ]
+    },
+    "src/pages": {
+      "path": "src/pages",
+      "purpose": "Page components",
+      "fileCount": 3,
+      "lastAccessed": 1775805611352,
+      "keyFiles": [
+        "InputPage.tsx",
+        "RecordsPage.tsx",
+        "ResultPage.tsx"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src/pages/ResultPage.tsx",
+      "accessCount": 16,
+      "lastAccessed": 1775806095919,
+      "type": "file"
+    },
+    {
+      "path": "src/components/DivinationPanel.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1775805772990,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
